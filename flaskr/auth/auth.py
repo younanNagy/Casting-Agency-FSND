@@ -6,7 +6,7 @@ from urllib.request import urlopen
 
 AUTH0_DOMAIN = 'dev-4pyf7rh9.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'drinks'
+API_AUDIENCE = 'casting'
 
 
 
