@@ -6,7 +6,7 @@ from flaskr.database.models import setupDB,createAll, Movie, Actor
 from flaskr import createApp
 import datetime
 
-TEST_DATABASE_URI = os.getenv('DATABASE_URI')
+TEST_DATABASE_URI = os.getenv('DATABASE_URL')
 ASSISTANT_TOKEN = os.getenv('ASSISTANT_TOKEN')
 DIRECTOR_TOKEN = os.getenv('DIRECTOR_TOKEN')
 PRODUCER_TOKEN = os.getenv('PRODUCER_TOKEN')

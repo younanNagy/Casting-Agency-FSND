@@ -8,7 +8,7 @@ import os
 # data_base_url=os.environ['URL']
 # data_base_name=os.environ['DataBaseName']
 # database_path="postgresql://{}:{}@{}/{}".format(data_base_user_name,data_base_user_password,data_base_url,data_base_name)
-database_path = os.getenv('DATABASE_URI')#'postgresql://postgres:2271996@localhost:5432/castingagency'
+database_path = os.getenv('DATABASE_URL')#'postgresql://postgres:2271996@localhost:5432/castingagency'
 db = SQLAlchemy()
 
 
