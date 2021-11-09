@@ -34,7 +34,7 @@ def createApp():
   def home():
       return jsonify({
           "success": True,
-          "message": "Hello, World!"
+          "message": "Hello, Om kolthoum is the best singer of all times"
       })
   
   # routes for actors
