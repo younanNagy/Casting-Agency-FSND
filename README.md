@@ -238,6 +238,17 @@ Sample: curl -X PATCH https://udacityfsndcastingagency.herokuapp.com/movies/1
 ### Login URL
 https://dev-4pyf7rh9.us.auth0.com/authorize?audience=casting&response_type=token&client_id=X0BQ36iW63CEY9pRgjciYDUsgE5CVWPc&redirect_uri=https://udacityfsndcastingagency.herokuapp.com/
 
+### Users
+# Casting Assistant
+ younan.nagy1@gmail.com
+ HansLanda227&
+# Casting Director
+ younan.nagy0@gmail.com
+ HansLanda227&
+# Executive Producer
+ younan.nagy2@gmail.com
+ HansLanda227&
+ 
 ### Unit tests 
 
  to run test cases   
