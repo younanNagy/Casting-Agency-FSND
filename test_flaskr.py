@@ -7,13 +7,13 @@ from flaskr import createApp
 import datetime
 
 TEST_DATABASE_URI = os.getenv('DATABASE_URL')
-ASSISTANT_TOKEN = os.getenv('ASSISTANT_TOKEN')
-DIRECTOR_TOKEN = os.getenv('DIRECTOR_TOKEN')
-PRODUCER_TOKEN = os.getenv('PRODUCER_TOKEN')
+# ASSISTANT_TOKEN = os.getenv('ASSISTANT_TOKEN')
+# DIRECTOR_TOKEN = os.getenv('DIRECTOR_TOKEN')
+# PRODUCER_TOKEN = os.getenv('PRODUCER_TOKEN')
 # TEST_DATABASE_URI = 'postgresql://postgres:2271996@localhost:5432/castingagency'
-# ASSISTANT_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjYwRk5PUFlGTHNLMklmUlRMRUs0aCJ9.eyJpc3MiOiJodHRwczovL2Rldi00cHlmN3JoOS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE3MTNjZjcxZTM4ZDkwMDY4NjIyMDljIiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzNjQ2NDMwNCwiZXhwIjoxNjM2NDcxNTA0LCJhenAiOiJYMEJRMzZpVzYzQ0VZOXBSZ2pjaVlEVXNnRTVDVldQYyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.CeiKpRBAIqewNAJWTfphnQfgOEGeG9RaHidiNoK3BVkDLYG47EU-Nfwzbw6fgO6Uducx1IPjyctHBcvxYe3rslnBIAe10tesZlFqgy4XS5meiaAbTVrPPubOld_pH_EKLLncJ2krpek0y93guyGxkH4PqzdWYnAwxUKyGwtQg6KasMrzEx8pk4g4Kw7q2m4-5ouyWNNtCZfCgvrUAgHWIRsPr2TvJGAw4ySiR291Xi9uW0cs2xPXKOhrm34Po1sTJ4Jg9RqusYiEoPVIZSZwRilzA3UzbdgxDvQpGR3Z9Kg3krk2tvg8CIRCr62DBNB8rM29-S4JdBGVfVw3kFo-Ag'
-# DIRECTOR_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjYwRk5PUFlGTHNLMklmUlRMRUs0aCJ9.eyJpc3MiOiJodHRwczovL2Rldi00cHlmN3JoOS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE3MTNjYjdmZjg2ZjYwMDZhM2JlMGQyIiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzNjQ2NDM1OCwiZXhwIjoxNjM2NDcxNTU4LCJhenAiOiJYMEJRMzZpVzYzQ0VZOXBSZ2pjaVlEVXNnRTVDVldQYyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiYWRkOmFjdG9ycyIsImRlbGV0ZTphY3RvcnMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyJdfQ.F_XVaEL770mqQtCSgHUCNhn3iNxoRqGS0m6VF5NDLdpr5TI2vwfQTKuRL6YCNh7cLhCHRp8q-AtfIvbv6PEiAFfqLEvcd8aC2NrhAtCrhdG8RCevhOdKPUrbEq9AjcTUixfW8gkmrNeqRu1iG22zZUhebZJPcvacsOKXMsaq9Iby-Ic8dyRvapJ5897CALPgGPkhTLROKXg0JCv3H5uXhhp5XI_0H6sFgaauKky-IL7RgFVHRpTcXZYrgveLhMwc0j9KcB5L5BjatG1oR9EFNICOfJak27BpTOUvAKc7ZkniFCnwfPywZ-Ultm7hF0BQHyi53pYqYhX8GyUhhYR1Yw'
-# PRODUCER_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjYwRk5PUFlGTHNLMklmUlRMRUs0aCJ9.eyJpc3MiOiJodHRwczovL2Rldi00cHlmN3JoOS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE4ODAzNjVhYjc5YzkwMDcxMzVlNmI2IiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzNjQ2NDQxMCwiZXhwIjoxNjM2NDcxNjEwLCJhenAiOiJYMEJRMzZpVzYzQ0VZOXBSZ2pjaVlEVXNnRTVDVldQYyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiYWRkOmFjdG9ycyIsImFkZDptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIl19.LNvh6-OXlXsYnD5hnHuekTIV7UfWAyV85H7_mUQw5Jb47CQlsrMcg3KvffxQKbqjYWSE0FLGV5fiqpsRkO9hO5mrhNta05QahR-qV8CAoCPDK9fsamRo8lfsaginW85l0q97ZDWHjKts-BA2pKzSDdKqNYSskxDV9FGY4Ti9ND3XsbC31pTY6rBDi4aQAehwbiri93CECCa-cd-mP0brld6p33_CBdYLUIXVZDK58mlgego44jd8nsWw4OJfmK3uYPhuTA-LrhqWJL6fsEsphY6LAEjqwYrlQp4SCI8YCsEENBAF0LK2-N4XYWutjzG7xfIaesFY2UCCqnz9QlzO3w'
+ASSISTANT_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjYwRk5PUFlGTHNLMklmUlRMRUs0aCJ9.eyJpc3MiOiJodHRwczovL2Rldi00cHlmN3JoOS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE3MTNjZjcxZTM4ZDkwMDY4NjIyMDljIiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzNjQ3NDM5NiwiZXhwIjoxNjM2NDgxNTk2LCJhenAiOiJYMEJRMzZpVzYzQ0VZOXBSZ2pjaVlEVXNnRTVDVldQYyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.x-36m9QTUP75sb26kxzrr0lRTGtacTo4Muf246v_LifTEZPDYOQS69GwopdHF_mzfnCflh1DEOZzIzERjIV-6wwY61eNg9R_v31bLJvFJuwGD7RjrBuCKix_EQkPfh0-GeGBtZbQRKSYFUa6ZAMD-VFzac9F6c0ZtHzYME0LxKyoX_rOO6U3KUUreXh5i38WlCgC-2-URxU9oQF9aEpmyuo3TJXreb_e86Td8ArcH413pYjxtw8rb5EGlDuP2rplyZJg2yrJ3cRQuKrVnC2cRpHD32TqMoLlack91ui1clAKFndtiX30ODJzXVRkrqi4F6rJIp060SQMnGw_6yDdKg'
+DIRECTOR_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjYwRk5PUFlGTHNLMklmUlRMRUs0aCJ9.eyJpc3MiOiJodHRwczovL2Rldi00cHlmN3JoOS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE3MTNjYjdmZjg2ZjYwMDZhM2JlMGQyIiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzNjQ3NDQzOCwiZXhwIjoxNjM2NDgxNjM4LCJhenAiOiJYMEJRMzZpVzYzQ0VZOXBSZ2pjaVlEVXNnRTVDVldQYyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiYWRkOmFjdG9ycyIsImRlbGV0ZTphY3RvcnMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyJdfQ.tcRoZofMnPwmHBe1bg3SpH9NgTIcQapKhrXd0tKb0eT7edo7uGLCVJvNFeP4FHIb9ztZPY9hqmO0bo46t-ikq8Goi14EnTYsQe_Qabw-eiKrNEeW_7QH5Ecevy_j2YQtbJfMcaV5Pa1VA--hRCKreLR2luLnL8KiKFzv-scnJLdtOME1LFHhlVk5oKBD7PeJXoi_PZvfkyZ6uWJmoon6R-41kJVbVuGeC49UNRS-Ls3Zu2jhFdNWWY2wokjsFPE15KN8RNhF7H3XUFaIMk6V0Ex4xbDWcFbal_EvEW7_A2fR8mwRaiTz-4hBJ6Y5rgNMwDaroqEpKtsVqERGz00SUw'
+PRODUCER_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjYwRk5PUFlGTHNLMklmUlRMRUs0aCJ9.eyJpc3MiOiJodHRwczovL2Rldi00cHlmN3JoOS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE4ODAzNjVhYjc5YzkwMDcxMzVlNmI2IiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzNjQ3NDQ5NywiZXhwIjoxNjM2NDgxNjk3LCJhenAiOiJYMEJRMzZpVzYzQ0VZOXBSZ2pjaVlEVXNnRTVDVldQYyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiYWRkOmFjdG9ycyIsImFkZDptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIl19.UhCg4Y_KbJ3r5NUh8ALF3E_HkNJ5Tw5sxIPosiwDiFVJ5eIBeiA_Em5fIfrTSYT6Py2nvtolsDoa90EK1Q0s8dRv5kqvPpVOY7PtT3tUUa7nautwXxm18IccklU5lWkPuW3rmApjQp9-bBHw6osaxIMuERkuqfkAXh7lL3ssBDT-ks6drstBScfDRa_UuBoNMefFZnMTh-YD-wqJ5k8_0bybURlH3TWr3czinNTefUnqufToAcyokdJ_a11sD-0bBIP9adARtn0C0iL2HY7Y60cZtt0j-yFhLaaNLXWWE44QfdbPxSAS5HZnZy9EUePqCvkJOf2AuQY0SmbXuAl-yw'
 
 class CastingAgencyTestCase(unittest.TestCase):
     """This class represents the casting agency test case"""
@@ -50,13 +50,12 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data["success"], True)
         self.assertTrue(data["actors"])
 
-    def testPostActors(self):
+    def testPostActorsCastingDirector(self):
         actor = {
             "name": "Alpachino",
             "gender": "male",
             "age": 70
         }
-
         res = self.client().post('/actors',
                                  headers={
                                      "Authorization": "Bearer {}"
@@ -68,7 +67,23 @@ class CastingAgencyTestCase(unittest.TestCase):
         actor['id'] = data['actor_id']
         self.assertEqual(actor_db .format(), actor)
 
-    def testPatchActor(self):
+    def testPostActorsCastingAssistant(self):
+        actor = {
+            "name": "Alpachino",
+            "gender": "male",
+            "age": 70
+        }
+        res = self.client().post('/actors',
+                                 headers={
+                                     "Authorization": "Bearer {}"
+                                     .format(self.casting_assistant)
+                                 }, json=actor)
+        data = json.loads(res.data)
+        self.assertFalse(data['success'])
+        self.assertEqual(403, res.status_code)
+
+    
+    def testPatchActorProducer(self):
         actor=Actor(name='Johny',
                     age=60,
                     gender='male')
@@ -90,6 +105,27 @@ class CastingAgencyTestCase(unittest.TestCase):
         actor_json = actor.format()
         for key in actor_patch.keys():
             self.assertEqual(actor_patch[key], actor_json[key])
+
+    def testPatchActorCastingAssistant(self):
+        actor=Actor(name='Johny',
+                    age=60,
+                    gender='male')
+        actor.insert()#so we have at least one Actor
+        
+        actor_patch = {
+            "gender": "male",
+            "age": 70
+        }
+
+        res = self.client().patch('/actors/'+str(actor.id),
+                                  headers={
+            "Authorization": "Bearer {}".format(self.casting_assistant)
+        }, json=actor_patch)
+        data = json.loads(res.data)
+        self.assertFalse(data['success'])
+        self.assertEqual(403, res.status_code)
+
+
 
     def testDeleteActor(self):
         actor=Actor(name='Johny',
@@ -191,7 +227,8 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data["success"], True)
         self.assertTrue(data["movies"])
 
-    def testPostMovies(self):
+    
+    def testPostMoviesProducer(self):
         movie = {
             "title": "Inglourious Basterds",
             "release_date": "2009-05-09",
@@ -209,7 +246,25 @@ class CastingAgencyTestCase(unittest.TestCase):
         movie['id'] = data['movie_id']
         self.assertEqual(movie_db.format(), movie)
 
-    def testPatchMovie(self):
+
+    def testPostMoviesCastingAssistant(self):
+        movie = {
+            "title": "Inglourious Basterds",
+            "release_date": "2009-05-09",
+            "genre": "Tarantino"
+        }
+
+        res = self.client().post('/movies',
+                                 headers={
+                                     "Authorization": "Bearer {}"
+                                     .format(self.casting_assistant)
+                                 }, json=movie)
+        data = json.loads(res.data)
+        self.assertFalse(data['success'])
+        self.assertEqual(403, res.status_code)
+
+
+    def testPatchMovieProducer(self):
         movie=Movie(title='Inglourious Basterds',
                     release_date=datetime.date.fromisoformat('2009-05-09'),
                     genre='Tarantino')
@@ -230,6 +285,25 @@ class CastingAgencyTestCase(unittest.TestCase):
         movie_json = movie.format()
         for key in movie_patch.keys():
             self.assertEqual(movie_patch[key], movie_json[key])
+
+    def testPatchMovieCastingAssistant(self):
+        movie=Movie(title='Inglourious Basterds',
+                    release_date=datetime.date.fromisoformat('2009-05-09'),
+                    genre='Tarantino')
+        movie.insert()#so we have at least one movie
+        movie_patch = {
+            "title": "Django Unchained",
+            "release_date": "2010-01-02",
+        }
+
+        res = self.client().patch('/movies/'+str(movie.id),
+                                  headers={
+            "Authorization": "Bearer {}".format(self.casting_assistant)
+        }, json=movie_patch)
+        data = json.loads(res.data)
+        self.assertFalse(data['success'])
+        self.assertEqual(403, res.status_code)
+    
 
     def testDeleteMovie(self):
         movie=Movie(title='Inglourious Basterds',
