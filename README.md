@@ -10,6 +10,7 @@ final project of full stack nanodegree ipmroves my skills and teaches lots of to
 
 ### Installing Dependencies
 
+
 #### Python 3.9
 
 Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/)
